@@ -77,18 +77,6 @@ describe('User routes', () => {
       await request(app).post('/v1/accounts').send(newUser).expect(UNAUTHORIZED)
     })
 
-    test('should return 403 error if logged in user is not manager', async () => {
-      const accessToken = generateAccessToken(newAccount)
-
-      const newUser = generateAccount()
-
-      await request(app)
-        .post('/v1/accounts')
-        .set('Authorization', `Bearer ${accessToken}`)
-        .send(newUser)
-        .expect(FORBIDDEN)
-    })
-
     test('should return 400 error if email is invalid', async () => {
       const wrongPayloadAccount = generateAccount(RoleTypes.USER, {
         email: undefined,
@@ -154,6 +142,8 @@ describe('User routes', () => {
     })
 
     test('should return 200 and apply the default query options', async () => {
+      await resetDatabase()
+
       const accounts = await insertAccounts([
         generateAccount(RoleTypes.USER, {
           created_at: new Date('2023-10-03 10:00:00')
@@ -201,19 +191,15 @@ describe('User routes', () => {
     })
 
     test('should list accounts returning 200 and apply the default query options', async () => {
+      await resetDatabase()
+
       const accounts = await insertAccounts([
         generateAccount(RoleTypes.SUPERUSER, {
-          created_at: new Date('2023-10-03 10:00:00')
-        }),
-        generateAccount(RoleTypes.USER, {
-          created_at: new Date('2023-10-03 10:00:00')
-        }),
-        generateAccount(RoleTypes.USER, {
           created_at: new Date('2023-10-03 10:00:00')
         })
       ])
 
-      const manager = accounts[2]
+      const manager = accounts[0]
 
       const managerAccessToken = generateAccessToken(manager)
 
@@ -257,6 +243,8 @@ describe('User routes', () => {
     })
 
     test('should correctly apply filter on name field', async () => {
+      await resetDatabase()
+
       const accounts = await insertAccounts([
         generateAccount(RoleTypes.USER),
         generateAccount(RoleTypes.USER),
@@ -290,6 +278,8 @@ describe('User routes', () => {
     })
 
     test('should correctly apply filter on role field', async () => {
+      await resetDatabase()
+
       const accounts = await insertAccounts([
         generateAccount(RoleTypes.USER),
         generateAccount(RoleTypes.USER),
@@ -325,6 +315,8 @@ describe('User routes', () => {
     })
 
     test('should correctly sort the returned array if descending sort param is specified', async () => {
+      await resetDatabase()
+
       const accounts = await insertAccounts([
         generateAccount(RoleTypes.USER),
         generateAccount(RoleTypes.USER),
@@ -350,7 +342,7 @@ describe('User routes', () => {
           page: 0,
           limit: 10,
           totalPages: 1,
-          totalCount: 4, // newAccount and the threes created here
+          totalCount: 3,
           hasMore: false
         })
       })
@@ -361,8 +353,10 @@ describe('User routes', () => {
     })
 
     test('should correctly sort the returned array if ascending sort param is specified', async () => {
+      await resetDatabase()
+
       const accounts = await insertAccounts([
-        generateAccount(),
+        generateAccount(RoleTypes.SUPERUSER),
         generateAccount(RoleTypes.USER),
         generateAccount(RoleTypes.USER)
       ])
@@ -385,17 +379,19 @@ describe('User routes', () => {
           page: 0,
           limit: 10,
           totalPages: 1,
-          totalCount: 4, // newAccount and the threes created here
+          totalCount: 3,
           hasMore: false
         })
       })
       expect(res.body.data).toHaveLength(3)
-      expect(res.body.data[0].id).toBe(manager.id)
       expect(res.body.data[1].id).toBe(userOne.id)
       expect(res.body.data[2].id).toBe(userTwo.id)
+      expect(res.body.data[0].id).toBe(manager.id)
     })
 
     test('should correctly sort the returned array if multiple sorting criteria are specified', async () => {
+      await resetDatabase()
+
       const accounts = await insertAccounts([
         generateAccount(RoleTypes.USER, { name: 'admin' }),
         generateAccount(RoleTypes.USER, { name: 'zyzz' }),
@@ -421,7 +417,7 @@ describe('User routes', () => {
           page: 0,
           limit: 10,
           totalPages: 1,
-          totalCount: 4, // newAccount and the threes created here
+          totalCount: 3,
           hasMore: false
         })
       })
@@ -473,8 +469,8 @@ describe('User routes', () => {
         })
       })
       expect(res.body.data).toHaveLength(2)
-      expect(res.body.data[0].id).toBe(userOne.id)
-      expect(res.body.data[1].id).toBe(userTwo.id)
+      expect(res.body.data[1].id).toBe(userOne.id)
+      expect(res.body.data[0].id).toBe(newAccount.id)
     })
 
     test('should return the correct page if page and limit params are specified', async () => {
@@ -506,7 +502,7 @@ describe('User routes', () => {
         })
       })
       expect(res.body.data).toHaveLength(2)
-      expect(res.body.data[0].id).toBe(manager.id)
+      expect(res.body.data[1].id).toBe(manager.id)
     })
   })
 

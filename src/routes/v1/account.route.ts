@@ -35,7 +35,7 @@ routerAccounts
     accountController.updateAccount
   )
   .delete(
-    auth(permissions.manageAccounts),
+    auth(permissions.deleteAccount),
     validate(accountValidation.deleteAccount),
     accountController.deleteAccount
   )

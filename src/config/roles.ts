@@ -1,7 +1,8 @@
 const permissions = {
   // accounts
   getAccounts: 'getAccounts',
-  manageAccounts: 'manageAccounts'
+  manageAccounts: 'manageAccounts',
+  deleteAccount: 'deleteAccount'
 }
 
 const allRoles = {
@@ -13,7 +14,8 @@ const allRoles = {
   superuser: [
     // accounts
     permissions.getAccounts,
-    permissions.manageAccounts
+    permissions.manageAccounts,
+    permissions.deleteAccount
   ]
 }
 
