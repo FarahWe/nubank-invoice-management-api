@@ -1,0 +1,15 @@
+# Dependencies
+node_modules
+
+# yarn error logs
+yarn-error.log
+
+# typescript outdir
+dist/
+
+# Environment varibales
+.env*
+!.env*.example
+
+# Code coverage
+coverage

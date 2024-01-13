@@ -1,0 +1,44 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Token {
+  id          String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  token       String   @unique
+  expires     DateTime
+  type        String
+  blacklisted Boolean  @default(false)
+  account     Account  @relation(fields: [account_id], references: [id])
+  account_id   String   @db.Uuid
+  created_at   DateTime @default(now())
+  updated_at   DateTime @updatedAt
+
+  @@index([blacklisted])
+  @@index([type])
+  @@index([token])
+  @@map("tokens")
+}
+
+model Account { 
+  id              String          @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name            String
+  email           String          @unique
+  password        String
+  password_code    Int?            
+  password_reset_tries Int?          
+  role            String
+  phone           String?
+  reset_password_sent_at DateTime?
+  created_at       DateTime        @default(now())
+  updated_at       DateTime        @updatedAt
+  deleted_at       DateTime?
+  Token           Token[]
+
+  @@index([email], map: "account-email-idx")
+  @@map("accounts")
+}
