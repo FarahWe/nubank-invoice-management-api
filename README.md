@@ -1,10 +1,4 @@
-## Mapa Iterativo (Sulfibra) - BACKEND
-
-Bem-vindo(a) à API REST do Mapa Iterativo, desenvolvida exclusivamente para a Sulfibra. Esta API fornece acesso a recursos relacionados à aplicação Mapa Iterativo, uma plataforma projetada para otimizar e aprimorar o gerenciamento estratégico de representantes comerciais na venda de casas modulares em todo o Brasil.
-
-## Visão Geral
-
-A aplicação foi desenvolvida para possibilitar à empresa Sulfibra cadastrar representantes, associando-os a cidades específicas. Essa associação visa otimizar operações estratégicas, permitindo uma gestão eficiente das atividades dos representantes em diferentes localidades. Através de contas personalizadas, os usuários podem gerenciar suas operações de maneira eficaz, contribuindo para o aprimoramento do desempenho e da abrangência geográfica da empresa.
+## Nubank Controle financeiro - BACKEND
 
 ## Funcionalidades Principais
 
@@ -40,7 +34,7 @@ E para iniciar o servidor, execute o seguinte comando:
 yarn dev
 ```
 
-A aplicação estará disponível em http://localhost:3005.
+A aplicação estará disponível em http://localhost:3000.
 
 ## Testes
 
@@ -58,7 +52,7 @@ E para testes de integrações/e2e rodar o seguinte comando:
 
 OBS: tenha certeza de ter o env.test configurado correntamente com o
 
-DATABASE_URL="postgresql://postgres:postgres@localhost:5432/sulfibra_tc_test?schema=public"
+DATABASE_URL="postgresql://postgres:postgres@localhost:5432/nubank_invoice_management_test?schema=public"
 
 ## Rotas no Insomnia
 
@@ -66,10 +60,10 @@ As rotas da API estão documentadas no arquivo `insomnia.json`. Importe este arq
 
 ## Configuração do Banco de Dados
 
-Certifique-se de criar um banco de dados PostgreSQL na porta 5432 com o nome `mapasulfibra` antes de iniciar a aplicação. Utilize a seguinte URL de banco de dados como referência:
+Certifique-se de criar um banco de dados PostgreSQL na porta 5432 com o nome `nubank_invoice_management` antes de iniciar a aplicação. Utilize a seguinte URL de banco de dados como referência:
 
 ```bash
-DATABASE_URL="postgresql://sulfibra:sulfibra@localhost:5432/mapasulfibra?schema=public"
+DATABASE_URL="postgresql://sulfibra:sulfibra@localhost:5432/nubank_invoice_management?schema=public"
 ```
 
 ## Comandos Úteis
