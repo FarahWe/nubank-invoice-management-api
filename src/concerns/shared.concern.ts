@@ -1,3 +1,5 @@
+import { writeFile } from 'fs/promises'
+
 /**
  * @param sort must be an string containing field and direction eg:
  * "name,-email,is_email_verified", where - means DESC
@@ -20,4 +22,11 @@ export const normalizeSort = (validFields: string[], sort: string) => {
     .filter(Boolean) // remove invalid fields or invalid direction
 
   return sortingOptions
+}
+
+export const saveCertificate = (
+  filepath: string,
+  cert: Buffer
+): Promise<void> => {
+  return writeFile(filepath, cert, { encoding: 'binary' })
 }
