@@ -11,9 +11,9 @@ const seeder = async () => {
   const account = await prisma.account.create({
     data: {
       id: randomUUID(),
-      name: 'Admin',
+      name: 'Eduardo Farah',
       password: hashPassword,
-      email: 'admin@admin.com',
+      email: 'eduardobfarah@gmail.com',
       role: 'superuser'
     }
   })

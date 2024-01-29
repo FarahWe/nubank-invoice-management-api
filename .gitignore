@@ -13,3 +13,5 @@ dist/
 
 # Code coverage
 coverage
+
+prisma/invoice-management.db
