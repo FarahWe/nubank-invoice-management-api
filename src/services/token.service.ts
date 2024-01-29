@@ -7,6 +7,7 @@ import accountService from './account.service'
 import { TokenTypes } from '../enums/TokenTypes'
 import prisma from '../config/database'
 import { Account, Token } from '@prisma/client'
+import { randomUUID } from 'crypto'
 
 const generateToken = (
   userId: string,
@@ -49,6 +50,7 @@ const saveToken = async (
 
   const tokenRow = await prisma.token.create({
     data: {
+      id: randomUUID(),
       token: token,
       account_id: account.id,
       expires: expires.toDate(),

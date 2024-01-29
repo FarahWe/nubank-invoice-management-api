@@ -1,15 +1,25 @@
 import express from 'express'
-import auth from '../../middlewares/auth'
 import nubankController from '../../controllers/nubank.controller'
+import auth from '../../middlewares/auth'
 
 const router = express.Router()
 
-router.post('/generate-qrcode', auth(), nubankController.generateQrcode)
-
-router.post('/login-qrcode', auth(), nubankController.signInWithQrcode)
+router.post(
+  '/refresh-tokens',
+  auth(),
+  nubankController.authenticateWithRefreshToken
+)
 
 router.post('/request-code', auth(), nubankController.generateCode)
 
-router.post('/login-code', auth(), nubankController.signInWithCodeCertificate)
+router.post(
+  '/login-code',
+  auth(),
+  nubankController.authenticateWithCodeCertificate
+)
+
+router.get('/me', auth(), nubankController.getNuAccount)
+
+router.get('/balance', auth(), nubankController.getNuBalance)
 
 export default router

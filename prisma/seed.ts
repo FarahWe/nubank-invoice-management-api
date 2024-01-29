@@ -1,6 +1,7 @@
 import { PrismaClient } from '@prisma/client'
 import bcrypt from 'bcryptjs'
 import logger from '../src/config/logger'
+import { randomUUID } from 'crypto'
 
 const prisma = new PrismaClient()
 
@@ -9,6 +10,7 @@ const seeder = async () => {
 
   const account = await prisma.account.create({
     data: {
+      id: randomUUID(),
       name: 'Admin',
       password: hashPassword,
       email: 'admin@admin.com',
