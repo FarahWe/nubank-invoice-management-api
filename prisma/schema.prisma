@@ -38,7 +38,22 @@ model Account {
   updated_at       DateTime        @updatedAt
   deleted_at       DateTime?
   Token           Token[]
+  BankConnection  BankConnection[]
 
   @@index([email], map: "account-email-idx")
   @@map("accounts")
+}
+
+model BankConnection {
+  id String @id
+  type String
+  access_token String?
+  refresh_token String?
+  cert Bytes?
+  account     Account  @relation(fields: [account_id], references: [id])
+  account_id   String
+
+
+  @@index([account_id], map: "bank-connection-idx")
+  @@map("bank_connections")
 }

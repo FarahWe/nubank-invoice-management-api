@@ -3,8 +3,7 @@ import config from './config/config'
 import logger from './config/logger'
 import '../src/utils/BigInt'
 import { gracefulShutdownWorkers, startWorkers } from './workers'
-import { sendEmailQueue } from './queues/sendEmail.queue'
-import { jobNames } from './config/bullmq'
+import { startQueues } from './queues'
 
 // start express
 let server = app.listen(config.port, () => {
@@ -14,19 +13,7 @@ let server = app.listen(config.port, () => {
 // Start BullMQ workers
 startWorkers()
 
-// remove everyting from alertQueue, otherwise we can have
-// multiple repetable jobs when changing the pattern
-sendEmailQueue.obliterate().then(() => {
-  sendEmailQueue.add(
-    jobNames.sendEmail,
-    {},
-    {
-      repeat: {
-        pattern: '0 * * * * *' // every second 0
-      }
-    }
-  )
-})
+startQueues()
 
 const exitHandler = () => {
   if (server) {

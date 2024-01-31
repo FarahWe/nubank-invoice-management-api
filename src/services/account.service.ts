@@ -88,11 +88,11 @@ const queryAccounts = async (
   return [accounts, Number(totalCount), totalPages, itemsPerPage, page, hasMore]
 }
 
-const getAccountById = async (id: string, options?: any) => {
+const getAccountById = async (id: string) => {
   return await prisma.account.findFirst({
     where: { id: id },
     include: {
-      ...options?.include
+      BankConnection: true
     }
   })
 }
