@@ -29,11 +29,7 @@ const authenticateWithRefreshToken = catchAsync(
       throw new ApiError(httpStatus.NOT_FOUND, 'Bank connection not found')
     }
 
-    const nuApi = new NubankApi({
-      clientName: 'invoice-management',
-      env: 'node',
-      cert: nuConnection?.cert
-    })
+    const nuApi = req?.nuSession!
 
     await nuApi.auth.authenticateWithRefreshToken(_refreshToken)
 
@@ -60,10 +56,7 @@ const authenticateWithCodeCertificate = catchAsync(
   ) => {
     const { code, cpf, password } = req.body
 
-    const nuApi = new NubankApi({
-      clientName: 'invoice-management',
-      env: 'node'
-    })
+    const nuApi = req?.nuSession!
 
     const certificates = await nuApi.auth.exchangeCertificates({
       cpf,
@@ -102,10 +95,7 @@ const generateCode = catchAsync(
   ) => {
     const { cpf, password } = req.body
 
-    const nuApi = new NubankApi({
-      clientName: 'invoice-management',
-      env: 'node'
-    })
+    const nuApi = req?.nuSession!
 
     const email = await nuApi.auth.requestAuthenticationCode({
       cpf,
@@ -117,39 +107,32 @@ const generateCode = catchAsync(
   }
 )
 
-const getCardFeed = catchAsync(async (req: Response, res: Response) => {
-  // TODO: fazer authentication
-  const nuApi = new NubankApi({
-    clientName: 'invoice-management',
-    env: 'node'
-  })
+const getCardFeed = catchAsync(
+  async (req: Response & CustomData, res: Response) => {
+    const nuApi = req?.nuSession!
+    const cardsTransactions = await nuApi.card.getFeed()
 
-  const cardsTransactions = await nuApi.card.getFeed()
+    res.json(cardsTransactions)
+  }
+)
 
-  res.json(cardsTransactions)
-})
+const getNuAccount = catchAsync(
+  async (req: Response & CustomData, res: Response) => {
+    const nuApi = req?.nuSession!
+    const account = await nuApi.account.me()
 
-const getNuAccount = catchAsync(async (req: Response, res: Response) => {
-  // TODO: fazer authentication
-  const nuApi = new NubankApi({
-    clientName: 'invoice-management',
-    env: 'node'
-  })
-  const account = await nuApi.account.me()
+    res.json(account)
+  }
+)
 
-  res.json(account)
-})
+const getNuBalance = catchAsync(
+  async (req: Response & CustomData, res: Response) => {
+    const nuApi = req?.nuSession!
+    const balance = await nuApi.account.getBalance()
 
-const getNuBalance = catchAsync(async (req: Response, res: Response) => {
-  // TODO: fazer authentication
-  const nuApi = new NubankApi({
-    clientName: 'invoice-management',
-    env: 'node'
-  })
-  const balance = await nuApi.account.getBalance()
-
-  res.json(balance)
-})
+    res.json(balance)
+  }
+)
 
 export default {
   authenticateWithCodeCertificate,

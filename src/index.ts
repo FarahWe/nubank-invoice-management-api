@@ -4,11 +4,15 @@ import logger from './config/logger'
 import '../src/utils/BigInt'
 import { gracefulShutdownWorkers, startWorkers } from './workers'
 import { startQueues } from './queues'
+import { startNubankApis } from './config/nuApi'
 
 // start express
 let server = app.listen(config.port, () => {
   logger.info(`Listening to port ${config.port}`)
 })
+
+// Start account bank apis
+startNubankApis()
 
 // Start BullMQ workers
 startWorkers()
