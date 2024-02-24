@@ -12,17 +12,19 @@ export default async (job: Job) => {
   try {
     const accounts = await prisma.account.findMany()
 
-    for (const account of accounts) {
+    for (const [accountIndex, account] of accounts.entries()) {
       const nuApiSession = getNuSession(account.id)
       const authState = nuApiSession?.authState
 
       if (!authState?.refreshToken) {
-        console.log(`${account.name} does not have a bank connection`)
+        job.log(`${account.name} does not have a bank connection`)
+        job.updateProgress((100 / accounts.length) * accountIndex + 1)
         continue
       }
 
       if (!account?.notion_api_key) {
-        console.log(`${account.name} does not have a notion connection`)
+        job.log(`${account.name} does not have a notion connection`)
+        job.updateProgress((100 / accounts.length) * accountIndex + 1)
         continue
       }
 
@@ -48,9 +50,15 @@ export default async (job: Job) => {
           (row) => row?.properties.nubank_id?.rich_text[0]?.plain_text
         ) ?? []
 
-      for (const cardTransaction of cardTransactions) {
+      for (const [index, cardTransaction] of cardTransactions.entries()) {
+        const totalProgress = (100 / accounts.length) * accountIndex
+        const currentAccountProgress =
+          ((cardTransactions.length / 100) * index + 1) / accounts.length
+
+        job.updateProgress(totalProgress + currentAccountProgress)
+
         if (notionNubankCardTransactionsIds.includes(cardTransaction.id)) {
-          console.log('ja existe', cardTransaction.id)
+          job.log(`transaction ${cardTransaction.id} already exists`)
           continue
         }
 
@@ -101,8 +109,6 @@ export default async (job: Job) => {
       }
     }
   } catch (error) {
-    console.error(error)
-    console.log('Error in create clients job')
     throw new UnrecoverableError('Error in nu invoice management job')
   } finally {
     job.updateProgress(100)

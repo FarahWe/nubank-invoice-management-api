@@ -9,6 +9,7 @@ import { startNubankApis } from './config/nuApi'
 // start express
 let server = app.listen(config.port, () => {
   logger.info(`Listening to port ${config.port}`)
+  logger.info(`Bull Dashboard started on route /v1/admin/queues/`)
 })
 
 // Start account bank apis

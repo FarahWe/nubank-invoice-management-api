@@ -8,7 +8,7 @@ export function startQueues() {
       {},
       {
         repeat: {
-          pattern: '0 * * * * *' // every second 30 minutes
+          pattern: '0 0 * * *' // every second 30 minutes
         }
       }
     )

@@ -2,6 +2,7 @@ import express from 'express'
 import authRoute from './auth.route'
 import accountRoute from './account.route'
 import nubankRoute from './nubank.route'
+import { serverAdapter } from '../../queues/adpters'
 
 const router = express.Router()
 
@@ -17,6 +18,10 @@ const defaultRoutes = [
   {
     path: '/nubank-integrations',
     route: nubankRoute
+  },
+  {
+    path: '/admin/queues',
+    route: serverAdapter.getRouter()
   }
 ]
 
