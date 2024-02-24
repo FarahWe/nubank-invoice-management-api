@@ -32,7 +32,10 @@ const createAccount = async (registerBody: RegisterBody): Promise<Account> => {
       email: registerBody.email,
       password: hashPassword,
       role: registerBody.role,
-      phone: registerBody.phone
+      phone: registerBody.phone,
+      ...(registerBody.notion_api_key && {
+        notion_api_key: registerBody.notion_api_key
+      })
     }
   })
 
@@ -143,7 +146,10 @@ const updateAccountById = async (
       email: account.email,
       role: account.role,
       name: account.name,
-      phone: account.phone
+      phone: account.phone,
+      ...(updateBody.notion_api_key && {
+        notion_api_key: updateBody.notion_api_key
+      })
     },
     where: {
       id: account.id

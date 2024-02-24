@@ -7,7 +7,8 @@ const createAccount = {
     password: Joi.string().required().custom(password),
     name: Joi.string().required(),
     role: Joi.string().valid('superuser', 'user'),
-    phone: Joi.string().required().custom(phone)
+    phone: Joi.string().required().custom(phone),
+    notion_api_key: Joi.string().optional()
   })
 }
 
@@ -37,7 +38,8 @@ const updateAccount = {
       name: Joi.string().optional(),
       email: Joi.string().email().optional(),
       phone: Joi.string().optional().custom(phone),
-      role: Joi.string().optional().valid('superuser', 'user')
+      role: Joi.string().optional().valid('superuser', 'user'),
+      notion_api_key: Joi.string().optional()
     })
     .min(1)
 }

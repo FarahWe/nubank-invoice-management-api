@@ -1,10 +1,9 @@
 import { Worker } from 'bullmq'
-import sendEmailWorkerOptions from './sendEmail.worker'
 import logger from '../config/logger'
 import { dispatchJob } from '../jobs'
 import handleInvoicementWorkerOptions from './handleInvoicement.worker'
 
-const workersOptions = [sendEmailWorkerOptions, handleInvoicementWorkerOptions]
+const workersOptions = [handleInvoicementWorkerOptions]
 
 const workers: Worker[] = []
 

@@ -29,6 +29,7 @@ model Account {
   name            String
   email           String          @unique
   password        String
+  notion_api_key  String?
   password_code    Int?            
   password_reset_tries Int?          
   role            String

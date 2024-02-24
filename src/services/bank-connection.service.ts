@@ -1,8 +1,6 @@
 import { Prisma } from '@prisma/client'
 import prisma from '../config/database'
 import { BankTypes } from '../enums/BankTypes'
-import ApiError from '../utils/ApiError'
-import httpStatus from 'http-status'
 
 export type BankType = BankTypes.NUBANK
 

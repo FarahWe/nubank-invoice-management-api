@@ -3,6 +3,7 @@ import { RoleTypes } from '../../enums/RoleTypes'
 export type RegisterBody = {
   email: string
   password: string
+  notion_api_key?: string
   name: string
   role: RoleTypes
   phone: string
@@ -18,6 +19,7 @@ export type UpdateBody = {
   name?: string
   role?: RoleTypes
   phone?: string
+  notion_api_key?: string
 }
 
 export type LoginBody = {

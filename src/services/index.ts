@@ -4,6 +4,7 @@ import emailService from './email.service'
 import tokenService from './token.service'
 import nubankService from './nubank.service'
 import bankConnectionService from './bank-connection.service'
+import handleInvoicementService from './handle-invoicement.service'
 
 export {
   accountService,
@@ -11,5 +12,6 @@ export {
   emailService,
   tokenService,
   nubankService,
-  bankConnectionService
+  bankConnectionService,
+  handleInvoicementService
 }
