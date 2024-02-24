@@ -3,18 +3,18 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider = "sqlite"
+  url      = "file:./invoice-management.db"
 }
 
-model Token {
-  id          String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+model Token { 
+  id          String   @id
   token       String   @unique
   expires     DateTime
   type        String
   blacklisted Boolean  @default(false)
   account     Account  @relation(fields: [account_id], references: [id])
-  account_id   String   @db.Uuid
+  account_id   String
   created_at   DateTime @default(now())
   updated_at   DateTime @updatedAt
 
@@ -25,7 +25,7 @@ model Token {
 }
 
 model Account { 
-  id              String          @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  id              String          @id
   name            String
   email           String          @unique
   password        String
@@ -38,7 +38,22 @@ model Account {
   updated_at       DateTime        @updatedAt
   deleted_at       DateTime?
   Token           Token[]
+  BankConnection  BankConnection[]
 
   @@index([email], map: "account-email-idx")
   @@map("accounts")
+}
+
+model BankConnection {
+  id String @id
+  type String
+  access_token String?
+  refresh_token String?
+  cert Bytes?
+  account     Account  @relation(fields: [account_id], references: [id])
+  account_id   String
+
+
+  @@index([account_id], map: "bank-connection-idx")
+  @@map("bank_connections")
 }

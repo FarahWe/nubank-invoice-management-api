@@ -11,6 +11,7 @@ import prisma from '../config/database'
 import accountConcerns from '../concerns/account.concern'
 import { RoleTypes } from '../enums/RoleTypes'
 import config from '../config/config'
+import { randomUUID } from 'crypto'
 
 const createAccount = async (registerBody: RegisterBody): Promise<Account> => {
   const existingAccount = await getAccountByEmail(registerBody.email)
@@ -26,6 +27,7 @@ const createAccount = async (registerBody: RegisterBody): Promise<Account> => {
 
   const account = await prisma.account.create({
     data: {
+      id: randomUUID(),
       name: registerBody.name,
       email: registerBody.email,
       password: hashPassword,
@@ -86,11 +88,11 @@ const queryAccounts = async (
   return [accounts, Number(totalCount), totalPages, itemsPerPage, page, hasMore]
 }
 
-const getAccountById = async (id: string, options?: any) => {
+const getAccountById = async (id: string) => {
   return await prisma.account.findFirst({
     where: { id: id },
     include: {
-      ...options?.include
+      BankConnection: true
     }
   })
 }
@@ -162,7 +164,7 @@ const deleteAccountById = async (account: Account) => {
     }
   })
 
-  await prisma.account.softDelete({
+  await prisma.account.delete({
     where: {
       id: account.id
     }

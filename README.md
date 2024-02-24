@@ -1,5 +1,7 @@
 ## Nubank Controle financeiro - BACKEND
 
+Controle financeiro de cartão de crédito com a nubank fazendo integração com o notion
+
 ## Funcionalidades Principais
 
 #### 1. Autenticação (Auth)
