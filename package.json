@@ -19,7 +19,7 @@
     "test:cov": "dotenv -e .env.test -- vitest run --coverage",
     "test:debug": "dotenv -e .env.test -- vitest --insect-brk --inspect --logHeapUsage --threads=false",
     "test:e2e": "dotenv -e .env.test -- vitest run --config ./vitest.config.e2e.ts --no-threads",
-    "prisma:prod:migrate": "prisma migrate deploy",
+    "prisma:prod:migrate": "prisma migrate deploy && ts-node prisma/seed.ts",
     "prisma:prod:seed": "dotenv -e .env.produtcion ts-node prisma/seed.ts",
     "prisma:dev:studio": "dotenv -e .env prisma studio",
     "prisma:dev:migrate": "dotenv -e .env prisma migrate dev",

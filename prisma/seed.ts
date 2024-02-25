@@ -8,20 +8,28 @@ const prisma = new PrismaClient()
 const seeder = async () => {
   const hashPassword = await bcrypt.hash('123456', await bcrypt.genSalt())
 
-  const account = await prisma.account.create({
-    data: {
-      id: randomUUID(),
-      name: 'Eduardo Farah',
-      password: hashPassword,
-      email: 'eduardobfarah@gmail.com',
-      role: 'superuser'
+  const accountAlreadyExists = await prisma.account.findFirst({
+    where: {
+      email: 'eduardobfarah@gmail.com'
     }
   })
 
-  logger.info('---------user created!----------')
-  logger.info(`Email: ${account.email}`)
-  logger.info(`Passwrod: 123456`)
-  logger.info('--------------------------------')
+  if (!accountAlreadyExists) {
+    const account = await prisma.account.create({
+      data: {
+        id: randomUUID(),
+        name: 'Eduardo Farah',
+        password: hashPassword,
+        email: 'eduardobfarah@gmail.com',
+        role: 'superuser'
+      }
+    })
+
+    logger.info('---------user created!----------')
+    logger.info(`Email: ${account.email}`)
+    logger.info(`Passwrod: 123456`)
+    logger.info('--------------------------------')
+  }
 }
 
 seeder()
