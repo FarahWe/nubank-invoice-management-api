@@ -13,6 +13,6 @@ export const jobNames = {
 export const defaultRedisConnection = {
   host: config.redis.host,
   port: config.redis.port,
-  user: config.redis.user,
+  username: config.redis.user,
   password: config.redis.password
 }
