@@ -20,7 +20,11 @@ const envVarsSchema = Joi.object()
       .default(4)
       .description('Length of a password code'),
     REDIS_HOST: Joi.string().description('Redis Host for bullmq queues'),
-    REDIS_PORT: Joi.number().default(6379)
+    REDIS_PORT: Joi.number().default(6379),
+    REDIS_PASSWORD: Joi.string().description(
+      'Redis password for bullmq queues'
+    ),
+    REDIS_USER: Joi.string().description('Redis username')
   })
   .unknown()
 
@@ -38,7 +42,9 @@ export default {
   },
   redis: {
     host: envVars.REDIS_HOST,
-    port: envVars.REDIS_PORT
+    port: envVars.REDIS_PORT,
+    password: envVars.REDIS_PASSWORD,
+    user: envVars.REDIS_USER
   },
   port: envVars.PORT,
   password: {
