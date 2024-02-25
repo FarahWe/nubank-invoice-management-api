@@ -59,6 +59,11 @@ const generateRandomCode = async () => {
   return randomCode
 }
 
+const getNotionDatabaseId = (databaseUrl: string) => {
+  const match = databaseUrl.match(/(?<=\/)[0-9a-f]{32}/i)
+  return match ? match[0] : null
+}
+
 const sanitizeAccount = (account: Account) => {
   return {
     id: account.id,
@@ -82,5 +87,6 @@ export default {
   isCodeValid,
   sanitizeAccount,
   sanitizeAccounts,
-  generateRandomCode
+  generateRandomCode,
+  getNotionDatabaseId
 }

@@ -1,18 +1,30 @@
 {
   "compilerOptions": {
-    "lib": ["es5", "es6", "dom"],
+    "lib": [
+      "es5",
+      "es6",
+      "dom"
+    ],
     "target": "es2022",
     "module": "commonjs",
     "moduleResolution": "node",
     "esModuleInterop": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "types": ["vitest/globals"],
+    "types": [
+      "vitest/globals"
+    ],
     "outDir": "dist",
     // https://www.prisma.io/docs/guides/testing/unit-testing
     // If you find that you're seeing a circular dependency error highlighted through mocking Prisma Client, try adding "strictNullChecks": true to your tsconfig.json.
     "strictNullChecks": true,
     "resolveJsonModule": true
   },
-  "include": ["src", "tests"]
+  "include": [
+    "src",
+    "tests"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
 }

@@ -3,6 +3,7 @@ import { faker } from '@faker-js/faker'
 import { Account, Prisma } from '@prisma/client'
 import { RoleTypes } from '../../src/enums/RoleTypes'
 import prisma from '../../src/config/database'
+import { randomUUID } from 'crypto'
 
 export const generateAccount = (
   role?: RoleTypes,
@@ -32,6 +33,7 @@ export const insertAccounts = async (
     const res = await prisma.account.create({
       data: {
         ...accounts[i],
+        id: randomUUID(),
         password: hashPassword
       }
     })

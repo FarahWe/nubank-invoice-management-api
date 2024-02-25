@@ -15,3 +15,4 @@ dist/
 coverage
 
 prisma/invoice-management.db
+prisma/invoice-management-test.db

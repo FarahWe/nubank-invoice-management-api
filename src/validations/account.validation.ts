@@ -39,7 +39,8 @@ const updateAccount = {
       email: Joi.string().email().optional(),
       phone: Joi.string().optional().custom(phone),
       role: Joi.string().optional().valid('superuser', 'user'),
-      notion_api_key: Joi.string().optional()
+      notion_api_key: Joi.string().optional(),
+      notion_database_url: Joi.string().optional()
     })
     .min(1)
 }

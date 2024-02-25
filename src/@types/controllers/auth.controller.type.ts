@@ -20,6 +20,7 @@ export type UpdateBody = {
   role?: RoleTypes
   phone?: string
   notion_api_key?: string
+  notion_database_url?: string
 }
 
 export type LoginBody = {

@@ -149,6 +149,9 @@ const updateAccountById = async (
       phone: account.phone,
       ...(updateBody.notion_api_key && {
         notion_api_key: updateBody.notion_api_key
+      }),
+      ...(updateBody.notion_database_url && {
+        notion_database_url: updateBody.notion_database_url
       })
     },
     where: {

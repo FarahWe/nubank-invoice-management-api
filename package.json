@@ -1,7 +1,7 @@
 {
-  "name": "rubik",
+  "name": "invoice-management",
   "version": "1.0.0",
-  "description": "Docs, Spaces, Alerts Management",
+  "description": "Auto, Finance, Management",
   "main": "src/index.js",
   "prisma": {
     "seed": "ts-node prisma/seed.ts"
@@ -11,17 +11,17 @@
     "node": ">=18.0.0"
   },
   "scripts": {
-    "start": "pm2 start ecosystem.config.json --no-daemon",
-    "build": "swc src --ignore **/*.test.js",
-    "dev": "dotenv -e .env.development nodemon - exec 'ts-node' src/index.ts",
+    "start": "dotenv -e .env node dist/index.js",
+    "build": "rm -rf dist && tsup src",
+    "dev": "dotenv -e .env nodemon - exec 'ts-node' src/index.ts",
     "test": "dotenv -e .env.test -- vitest run",
     "test:watch": "dotenv -e .env.test -- vitest",
     "test:cov": "dotenv -e .env.test -- vitest run --coverage",
     "test:debug": "dotenv -e .env.test -- vitest --inspect-brk --inspect --logHeapUsage --threads=false",
     "test:e2e": "dotenv -e .env.test -- vitest run --config ./vitest.config.e2e.ts --no-threads",
-    "prisma:dev:studio": "dotenv -e .env.development prisma studio",
-    "prisma:dev:migrate": "dotenv -e .env.development prisma migrate dev",
-    "prisma:dev:seed": "dotenv -e .env.development ts-node prisma/seed.ts",
+    "prisma:dev:studio": "dotenv -e .env prisma studio",
+    "prisma:dev:migrate": "dotenv -e .env prisma migrate dev",
+    "prisma:dev:seed": "dotenv -e .env ts-node prisma/seed.ts",
     "prisma:test:seed": "dotenv -e .env.test ts-node prisma/seed.ts",
     "prisma:test:migrate": "dotenv -e .env.test prisma migrate dev",
     "prettier": "prettier --check src/**/*.ts",
@@ -91,6 +91,7 @@
     "prisma": "^5.4.1",
     "supertest": "^6.0.1",
     "ts-node": "^10.9.1",
+    "tsup": "^8.0.2",
     "typescript": "^5.2.2",
     "unplugin-swc": "^1.4.2",
     "vite-tsconfig-paths": "^4.2.0",

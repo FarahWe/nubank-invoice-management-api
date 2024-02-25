@@ -4,7 +4,7 @@ generator client {
 
 datasource db {
   provider = "sqlite"
-  url      = "file:./invoice-management.db"
+  url      = env("DATABASE_URL")
 }
 
 model Token { 
@@ -30,6 +30,7 @@ model Account {
   email           String          @unique
   password        String
   notion_api_key  String?
+  notion_database_url String? 
   password_code    Int?            
   password_reset_tries Int?          
   role            String
