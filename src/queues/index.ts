@@ -8,8 +8,7 @@ export function startQueues() {
       {},
       {
         repeat: {
-          // pattern: '0 13 * * *' // every day 13 hrs
-          pattern: '*/5 * * * *'
+          pattern: '0 13 * * *' // every day 13 hrs
         }
       }
     )
